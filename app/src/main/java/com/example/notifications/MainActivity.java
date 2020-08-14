@@ -16,6 +16,9 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_INTENT = 0;
+    public static final String NOTIFICATION_STRING = "notificationPUTEXTRA";
+    public static final String NOTIFICATION_ID = "notificationIdIntent";
+    public static final int NOTICATION_CHANL1_ID = 1;
     Button btnOne,btnTwo;
     EditText etTitle,etText;
 
@@ -61,21 +64,35 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,App.CHANNEL_ONE);
 
+
+
         Intent activityIntent = new Intent(this,MainActivity.class);
 
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this,REQUEST_INTENT,activityIntent,0);
 
+
+
+        Intent actionActivityIntent = new Intent(this,NotificationActivity.class);
+        actionActivityIntent.putExtra(NOTIFICATION_STRING,text);
+        actionActivityIntent.putExtra(NOTIFICATION_ID,NOTICATION_CHANL1_ID);
+
+        PendingIntent actionIntent = PendingIntent.getActivity(
+                this,REQUEST_INTENT,actionActivityIntent,0);
+
+
+
         builder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setContentIntent(contentIntent)
+                .addAction(R.mipmap.ic_launcher,"Open Activity",actionIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
         // you cannot use NotificationManager.IMPORTANCE_HIGH here because it is introduced
         // above android nougat(N)
 
-        manager.notify(1,builder.build());
+        manager.notify(NOTICATION_CHANL1_ID,builder.build());
 
     }
 
