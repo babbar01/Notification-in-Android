@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_INTENT = 0;
     Button btnOne,btnTwo;
     EditText etTitle,etText;
 
@@ -58,10 +61,17 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,App.CHANNEL_ONE);
 
+        Intent activityIntent = new Intent(this,MainActivity.class);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                this,REQUEST_INTENT,activityIntent,0);
+
         builder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setContentIntent(contentIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
         // you cannot use NotificationManager.IMPORTANCE_HIGH here because it is introduced
         // above android nougat(N)
 
