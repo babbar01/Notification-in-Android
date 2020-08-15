@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         actionActivityIntent.putExtra(NOTIFICATION_ID,NOTICATION_CHANL1_ID);
 
         PendingIntent actionIntent = PendingIntent.getActivity(
-                this,REQUEST_INTENT,actionActivityIntent,0);
+                this,REQUEST_INTENT,actionActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 
